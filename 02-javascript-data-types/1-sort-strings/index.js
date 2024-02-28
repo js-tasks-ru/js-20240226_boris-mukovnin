@@ -5,24 +5,13 @@
  * @returns {string[]}
  */
 export function sortStrings(arr, param = 'asc') {
-  let sortedArr = arr.slice().sort((a, b) => {
-    const langA = a.match(/^[a-zA-Z]/) ? 'en' : 'ru';
-    const langB = b.match(/^[a-zA-Z]/) ? 'en' : 'ru';
-
-    if (langA === langB) {
-      return a.localeCompare(b, undefined, {caseFirst: 'upper'});
-    } else {
-      return langA === 'ru' ? -1 : 1;
-    }
-  });
-
-  if (param === 'asc') {
-    return sortedArr;
-  }
-
   if (param === 'desc') {
-    return sortedArr.reverse();
+    return arr.slice().sort((a, b) =>
+      b.localeCompare(a, ['ru', 'en'], {caseFirst: 'upper'})
+    );
   }
 
-  return arr.slice();
+  return arr.slice().sort((a, b) =>
+    a.localeCompare(b, ['ru', 'en'], {caseFirst: 'upper'})
+  );
 }
